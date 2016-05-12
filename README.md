@@ -4,7 +4,7 @@ Demonstrates some of the capabilities of the Spring Boot framework through a sma
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
-1. Spring Boot 1.3.2, supporting fully executable JARs for Linux based operating systems, including “service” support
+1. Spring Boot 1.3.4, supporting fully executable JARs for Linux based operating systems, including “service” support
 2. Rest controller to generate qrcode images
   1. Produces binary Content-Type (PNG)
   2. Uses the Google zxing library
@@ -35,7 +35,7 @@ From the command line with Maven:
 From the command line with Linux:
 
     $ cd spring-qrcode-example/target
-    $ ./spring-qrcode-example-1.0.1.jar
+    $ ./spring-qrcode-example-1.0.2.jar
 
 Access the deployed web application [http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring](http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring)
 
