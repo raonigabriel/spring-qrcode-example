@@ -16,6 +16,7 @@
 package com.github.spring.example;
 
 import net.rossillo.spring.web.mvc.CacheControl;
+import net.rossillo.spring.web.mvc.CacheControlHandlerInterceptor;
 import net.rossillo.spring.web.mvc.CachePolicy;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,14 @@ import org.springframework.http.*;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EnableAsync
 @EnableCaching
 @RestController
 @SpringBootApplication
-public class SpringExampleApp {
+public class SpringExampleApp extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	ImageService imageService;
@@ -50,6 +53,11 @@ public class SpringExampleApp {
 		}
 	}
 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new CacheControlHandlerInterceptor());
+	}	
+	
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public class InternalServerError extends RuntimeException {
 
