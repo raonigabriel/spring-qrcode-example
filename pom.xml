@@ -4,7 +4,7 @@
 
 	<groupId>com.github</groupId>
 	<artifactId>spring-qrcode-example</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 
 	<name>spring-qrcode-example</name>
 	<description>A simple (yet powerfull) example to demonstrate some of the Spring Boot features.</description>
@@ -28,7 +28,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.2.RELEASE</version>
+		<version>1.3.4.RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -79,6 +79,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>		
 	</dependencies>
 
 	<build>
