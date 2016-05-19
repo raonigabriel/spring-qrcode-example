@@ -36,6 +36,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class SpringExampleApp extends WebMvcConfigurerAdapter {
 
+	public static final String QRCODE_ENDPOINT = "/qrcode";
+	
 	@Autowired
 	ImageService imageService;
 
@@ -43,11 +45,11 @@ public class SpringExampleApp extends WebMvcConfigurerAdapter {
 		SpringApplication.run(SpringExampleApp.class, args);
 	}
 
-	@RequestMapping(value = "/qrcode", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+	@RequestMapping(value = QRCODE_ENDPOINT, method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
 	@CacheControl(maxAge = 3600, policy = { CachePolicy.PUBLIC } )
 	public ListenableFuture<byte[]> getQRCode(@RequestParam(value = "text", required = true) String text) {
 		try {
-			return imageService.generateQRCode(text, 256, 256);
+			return imageService.generateQRCodeAsync(text, 256, 256);
 		} catch (Exception ex) {
 			throw new InternalServerError("Error while generating QR code image.", ex);
 		}
