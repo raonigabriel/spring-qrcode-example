@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.github.spring.example;
 import java.io.*;
 
 import org.slf4j.*;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.*;
@@ -30,11 +31,11 @@ import com.google.zxing.client.j2se.*;
 import com.google.zxing.common.BitMatrix;
 
 @Service
+@Cacheable(cacheNames = "qr-code-cache", sync = true)
 public class ImageService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 
-	@Cacheable("qr-code-cache")
 	public byte[] generateQRCode(String text, int width, int height) throws WriterException, IOException {
 
 		Assert.hasText(text);
@@ -49,9 +50,14 @@ public class ImageService {
 		return baos.toByteArray();
 	}
 
-	@Cacheable("qr-code-cache")
+	@Async
 	public ListenableFuture<byte[]> generateQRCodeAsync(String text, int width, int height) throws Exception {
 		return new AsyncResult<byte[]>(generateQRCode(text, width, height));
+	}
+	
+	@CacheEvict(cacheNames = "qr-code-cache", allEntries = true)
+	public void purgeCache() {
+		LOGGER.info("Purging cache");
 	}
 
 }

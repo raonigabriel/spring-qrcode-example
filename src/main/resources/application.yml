@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  
+spring:
+     
+  mvc:
+    favicon:
+      enabled: false  
+      
+  jmx:
+    enabled: false
+    
+  cache:
+    type: simple
+    
+logging:
+  level:
+    org.springframework.web: INFO
