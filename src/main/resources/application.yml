@@ -1,6 +1,9 @@
 server:
   port: 8080
-  
+  error:
+    whitelabel:
+      enabled: false
+ 
 spring:
      
   mvc:
@@ -16,3 +19,4 @@ spring:
 logging:
   level:
     org.springframework.web: INFO
+    
