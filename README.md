@@ -1,4 +1,4 @@
-[![Maven workflow](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg)](https://github.com/raobigabriel/spring-qrcode-example/actions?workflow=maven)
+![](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg)
 
 Spring Boot QrCode Example
 -------------------
