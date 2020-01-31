@@ -1,10 +1,12 @@
+[![Maven workflow](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg)](https://github.com/raobigabriel/spring-qrcode-example/actions?workflow=maven)
+
 Spring Boot QrCode Example
 -------------------
 Demonstrates some of the capabilities of the Spring Boot framework through a small, simple example.
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
-1. Spring Boot 2.1.0, supporting fully executable JARs for Linux based operating systems, including “service” support
+1. Spring Boot 2.2.4, supporting fully executable JARs for Linux based operating systems, including “service” support
 2. WebFlux rest controller to generate qrcode images
   1. Produces binary Content-Type (PNG)
   2. HTTP header manipulation (Cache-Control)
@@ -18,7 +20,7 @@ After reviewing this example, you should have a good understanding of what Sprin
 6. Schedulled tasks. Automatic cache eviction, every 30 minutes.
 7. Logging (sl4j + logback)
 8. Only 2 classes, about 100 lines of code!!! 
-9. Small. Final JAR includes everything (it self-contained) and it's about 16 MB
+9. Small. Final JAR includes everything (it self-contained) and it's about 17 MB
 
 
 To get the code:
@@ -39,7 +41,7 @@ From the command line with Maven:
 From the command line with Linux:
 
     $ cd spring-qrcode-example/target
-    $ ./spring-qrcode-example-1.1.0.jar
+    $ ./spring-qrcode-example-1.2.0.jar
 
 Access the deployed web application [http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring](http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring)
 
