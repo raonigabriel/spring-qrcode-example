@@ -67,7 +67,7 @@ public class SpringExampleApp {
 	// Workaround, see: https://github.com/spring-projects/spring-boot/issues/9785
 	@Bean
 	public RouterFunction<ServerResponse> indexRouter(@Value("classpath:/static/index.html") final Resource indexHtml) {
-		return route(GET("/"), request -> ok().contentType(MediaType.TEXT_HTML).syncBody(indexHtml));
+		return route(GET("/"), request -> ok().contentType(MediaType.TEXT_HTML).bodyValue(indexHtml));
 	}
 
 	@ExceptionHandler(RuntimeException.class)
