@@ -24,7 +24,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B deploy -DaltDeploymentRepository=githubRepo::default::https://maven.pkg.github.com/raonigabriel
+      run: mvn -B deploy -DaltDeploymentRepository=githubRepo::default::https://maven.pkg.github.com/raonigabriel/spring-qrcode-example
       env:
         GITHUB_TOKEN: ${{ github.token }}
        
