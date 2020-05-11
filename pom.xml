@@ -22,6 +22,14 @@
 		<url>https://github.com/raonigabriel/spring-qrcode-example</url>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/raonigabriel/tabajara</url>
+		</repository>
+	</distributionManagement>	
+	
 	<properties>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
