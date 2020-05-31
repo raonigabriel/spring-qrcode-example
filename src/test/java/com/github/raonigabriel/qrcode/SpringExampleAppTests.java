@@ -1,4 +1,4 @@
-package com.github.spring.example;
+package com.github.raonigabriel.qrcode;
 
 import static org.junit.Assert.assertNotNull;
 
