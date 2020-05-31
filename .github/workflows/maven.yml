@@ -1,7 +1,9 @@
 name: Maven Build
+
 on:
-  push:
-    branches: master
+  release:
+    types: [published]
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,3 +25,9 @@ jobs:
       run: mvn -B deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Login to DockerHub Registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin        
+    - name: Build the Docker image
+      run: docker build . -t raonigabriel/spring-qrcode-example:latest
+    - name: Push the Docker image
+      run: docker push raonigabriel/spring-qrcode-example:latest    
