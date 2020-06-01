@@ -1,5 +1,9 @@
 FROM openjdk:8-jre-alpine
 
-COPY ./target/spring-qrcode-example-1.3.0.jar /spring-qrcode-example.jar
+ARG JAR_FILE=target/*.jar
 
-CMD ["./spring-qrcode-example.jar"]
+EXPOSE 8080
+
+COPY ${JAR_FILE} /app.jar
+
+ENTRYPOINT ["java","-jar","/app.jar"]
