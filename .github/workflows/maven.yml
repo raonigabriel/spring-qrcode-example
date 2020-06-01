@@ -21,8 +21,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build and publish package
-      run: mvn -B deploy
+    - name: Build and package
+      run: mvn -B clean package
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Login to DockerHub Registry
