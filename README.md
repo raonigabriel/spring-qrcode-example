@@ -41,7 +41,7 @@ From the command line with Maven:
 From the command line with Linux:
 
     $ cd spring-qrcode-example/target
-    $ ./spring-qrcode-example-1.3.0.jar
+    $ ./spring-qrcode-example-1.3.1.jar
 
 Using docker:
 
