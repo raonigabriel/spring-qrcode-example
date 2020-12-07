@@ -25,6 +25,8 @@ jobs:
       run: mvn -B clean package
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Submit code coverage
+      run: bash <(curl -s https://codecov.io/bash)        
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin        
     - name: Build the Docker image
