@@ -1,22 +1,29 @@
 package com.github.raonigabriel.qrcode;
 
-import static org.junit.Assert.assertNotNull;
-
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import javax.imageio.ImageIO;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.StreamUtils;
 
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @AutoConfigureWebTestClient
 public class SpringExampleAppTests {
 
@@ -24,41 +31,57 @@ public class SpringExampleAppTests {
 	private ImageService imageService;	
 
 	@Autowired
-    private WebTestClient webClient;
-	
+	private WebTestClient webClient;
+
 	@Test
 	public void testImageServiceQrCodeGenerationSuccess () throws Exception {
 		byte[] imageBlob = imageService.generateQRCode("This is a test", 256, 256).block();
-		assertNotNull(imageBlob);
+		Assertions.assertNotNull(imageBlob);
+
+		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBlob));
+		LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));		
+		Result result = new MultiFormatReader().decode(bitmap);
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals("This is a test", result.getText());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testImageServiceQrCodeGenerationErrorNullText () throws Exception {
-		imageService.generateQRCode(null, 256, 256);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			imageService.generateQRCode(null, 256, 256);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testImageServiceQrCodeGenerationErrorEmptyText () throws Exception {
-		imageService.generateQRCode("", 256, 256);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			imageService.generateQRCode("", 256, 256);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testImageServiceQrCodeGenerationErrorInvalidWidth () throws Exception {
-		imageService.generateQRCode("This is a test", 0, 256);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			imageService.generateQRCode("This is a test", 0, 256);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testImageServiceQrCodeGenerationErrorInvalidHeight () throws Exception {
-		imageService.generateQRCode("This is a test", 256, 0);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			imageService.generateQRCode("This is a test", 256, 0);
+		});
 	}
-	
+
 	@Test
 	public void testQrCodeControllerSuccess() throws Exception {
 		byte[] testImage = StreamUtils.copyToByteArray(getClass().getResourceAsStream("/test.png"));
 		webClient.get().uri(SpringExampleApp.QRCODE_ENDPOINT + "?text=This is a test")
-			.exchange().expectStatus().isOk()
-			.expectHeader().contentType(MediaType.IMAGE_PNG)
-			.expectHeader().cacheControl(CacheControl.maxAge(1800, TimeUnit.SECONDS))
-			.expectBody(byte[].class).isEqualTo(testImage);
+		.exchange().expectStatus().isOk()
+		.expectHeader().contentType(MediaType.IMAGE_PNG)
+		.expectHeader().cacheControl(CacheControl.maxAge(1800, TimeUnit.SECONDS))
+		.expectHeader().contentLength(274)
+		.expectBody(byte[].class).isEqualTo(testImage);
 	}
 }
