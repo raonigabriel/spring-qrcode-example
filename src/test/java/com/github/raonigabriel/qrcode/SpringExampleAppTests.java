@@ -76,12 +76,19 @@ public class SpringExampleAppTests {
 
 	@Test
 	public void testQrCodeControllerSuccess() throws Exception {
-		byte[] testImage = StreamUtils.copyToByteArray(getClass().getResourceAsStream("/test.png"));
+		byte[] testImage;
+		// When running using Azul "Zulu JDK", the generated image is smaller. We need to take this into
+		// consideration, because Github Actions is using Zulu JDK.
+		if (System.getProperty("java.vendor").contains("Azul Systems")) {
+			testImage = StreamUtils.copyToByteArray(getClass().getResourceAsStream("/test-azul.png"));
+		} else {
+			testImage = StreamUtils.copyToByteArray(getClass().getResourceAsStream("/test.png"));
+		}
 		webClient.get().uri(SpringExampleApp.QRCODE_ENDPOINT + "?text=This is a test")
 		.exchange().expectStatus().isOk()
 		.expectHeader().contentType(MediaType.IMAGE_PNG)
 		.expectHeader().cacheControl(CacheControl.maxAge(1800, TimeUnit.SECONDS))
-		.expectHeader().contentLength(274)
+		.expectHeader().contentLength(testImage.length)
 		.expectBody(byte[].class).isEqualTo(testImage);
 	}
 }
