@@ -4,7 +4,7 @@
 
 	<groupId>com.github.raonigabriel</groupId>
 	<artifactId>spring-qrcode-example</artifactId>
-	<version>1.4.1</version>
+	<version>1.4.2</version>
 	<packaging>jar</packaging>
 
 	<name>spring-qrcode-example</name>
