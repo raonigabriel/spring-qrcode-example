@@ -1,4 +1,4 @@
-![Maven Build](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg?branch=1.3.1)
+![Maven Build](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg?branch=1.5.7)
 [![Codecov](https://codecov.io/gh/raonigabriel/spring-qrcode-example/branch/master/graph/badge.svg)](https://codecov.io/gh/raonigabriel/spring-qrcode-example)
 [![Libraries](https://img.shields.io/librariesio/github/raonigabriel/spring-qrcode-example)](https://libraries.io/github/raonigabriel/spring-qrcode-example)
 
@@ -8,7 +8,7 @@ Demonstrates some of the capabilities of the Spring Boot framework through a sma
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
-1. [Spring Boot 2.4.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems, including [“service” support](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L100)
+1. [Spring Boot 2.5.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems, including [“service” support](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L100)
 2. WebFlux rest controller to [generate qrcode images](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L54)
   1. Produces binary [Content-Type (PNG)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L53)
   2. HTTP header manipulation [(Cache-Control)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L56)
