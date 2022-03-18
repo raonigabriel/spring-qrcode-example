@@ -47,7 +47,7 @@ From the command line with Linux:
 
 Using docker:
 
-    $ docker run -d --name qrcode-service --rm -p 8080:8080 raonigabriel:spring-qrcode-example
+    $ docker run -d --name qrcode-service --rm -p 8080:8080 raonigabriel/spring-qrcode-example
 
 
 Access the deployed web application [http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring](http://localhost:8080/qrcode?text=Hello%20World%20From%20Spring)
