@@ -43,6 +43,9 @@ public class ImageService {
 		Assert.isTrue(width > 0, "width must be greater than zero");
 		Assert.isTrue(height > 0, "height must be greater than zero");
 		
+		// Replace pattern-breaking characters
+		text = text.replaceAll("[\n\r\t]", "_");
+		
 		LOGGER.info("Will generate image  text=[{}], width=[{}], height=[{}]", text, width, height);
 
 		try {
