@@ -1,7 +1,6 @@
 name: 'Continuous Integration'
-ci.
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Run manually
   push: # Run on push
     branches-ignore:
       - master # Run on every branch, except master
