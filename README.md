@@ -1,4 +1,4 @@
-![Maven Build](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg?branch=1.5.7)
+![Maven Build](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg?branch=1.6.0)
 [![Codecov](https://codecov.io/gh/raonigabriel/spring-qrcode-example/branch/master/graph/badge.svg)](https://codecov.io/gh/raonigabriel/spring-qrcode-example)
 [![Libraries](https://img.shields.io/librariesio/github/raonigabriel/spring-qrcode-example)](https://libraries.io/github/raonigabriel/spring-qrcode-example)
 
@@ -8,7 +8,7 @@ Demonstrates some of the capabilities of the Spring Boot framework through a sma
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
-1. [Spring Boot 2.5.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems, including [“service” support](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L100)
+1. [Spring Boot 2.7.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems, including [“service” support](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L100)
 2. WebFlux rest controller to [generate qrcode images](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L54)
   1. Produces binary [Content-Type (PNG)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L53)
   2. HTTP header manipulation [(Cache-Control)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L56)
@@ -16,13 +16,13 @@ After reviewing this example, you should have a good understanding of what Sprin
   4. Manual cache eviction [(HTTP DELETE)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L62)
   5. CORS enabled [(GET, DELETE)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L40)
 3. [Reactive processing](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L35) (for the image creation)
-  1. Uses the [Google zxing library](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L78)
+  1. Uses the [Fast Java QrCode Generator library](https://github.com/nayuki/QR-Code-generator/tree/master/java-fast) by *nayuki*.
 4. Spring IoC ([Service](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L29), [Autowired](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L47))
 5. [Backend caching](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L30) (Spring "simple" memory-based ConcurrentHashMap)
 6. Schedulled tasks. Automatic cache eviction, [every 30 minutes](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L60).
 7. [Logging](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L33) (sl4j + logback)
 8. Only 2 classes, about 100 lines of code!!! 
-9. Small. Final JAR includes everything (it self-contained) and it's about 17 MB
+9. Small. Final JAR includes everything (it self-contained) and it's about 18 MB
 
 
 To get the code:
@@ -60,7 +60,9 @@ In your preferred IDE such as SpringSource Tool Suite (STS) or IDEA:
 
 ## License
 
-Released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html)
+Code on package "com.github.raonigabriel" **(my code)** is released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+Code under on "io.nayuki.fastqrcodegen" **(nayuki code)** is released under the [MIT license](https://choosealicense.com/licenses/mit/)
 
 ## Disclaimer
 * This code comes with no warranty. Use it at your own risk.
