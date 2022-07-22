@@ -1,5 +1,4 @@
 .dockerignore
-pom.xml
 .classpath
 .git/
 .github/
@@ -8,16 +7,6 @@ LICENSE
 .project
 README.md
 .settings/
-src/
-target/classes/
-target/site/
-target/generated-sources/
-target/generated-test-sources/
-target/test-classes/
-target/jacoco.exec
-target/maven-archiver/
-target/surefire-reports/
-target/maven-status/
-target/*.original
+target/
 .vscode/
-
+.idea/

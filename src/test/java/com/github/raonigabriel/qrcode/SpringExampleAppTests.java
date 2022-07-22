@@ -1,16 +1,26 @@
 package com.github.raonigabriel.qrcode;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.Cache;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -19,63 +29,101 @@ import org.springframework.util.StreamUtils;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 
-@SpringBootTest
 @AutoConfigureWebTestClient
-public class SpringExampleAppTests {
+@SpringBootTest(classes = {SpringExampleApp.class, ImageService.class})
+class SpringExampleAppTests {
 
 	@Autowired
-	private ImageService imageService;	
+	private ImageService imageService;
 
 	@Autowired
 	private WebTestClient webClient;
-
-	@Test
-	public void testImageServiceQrCodeGenerationSuccess () throws Exception {
-		byte[] imageBlob = imageService.generateQRCode("This is a test", 256, 256).block();
-		Assertions.assertNotNull(imageBlob);
-
-		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBlob));
-		LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
-		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));		
-		Result result = new MultiFormatReader().decode(bitmap);
-		Assertions.assertNotNull(result);
-		Assertions.assertEquals("This is a test", result.getText());
+	
+	@Autowired
+    private CacheManager cacheManager;
+	
+	private String text;
+	
+	private int width;
+	
+	private int height;
+	
+	@BeforeEach
+	void beforeEach() {
+		text = "This is a test";
+		width = 256;
+		height = 256;
 	}
 
 	@Test
-	public void testImageServiceQrCodeGenerationErrorNullText () throws Exception {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			imageService.generateQRCode(null, 256, 256);
+	void given_valid_params_should_generate_readable_qr () throws Exception {
+		// Given, When
+		byte[] imageBlob = imageService.generateQRCode(text, width, height);
+
+		// Then
+		assertNotNull(imageBlob);
+		assertReadableQr(imageBlob);
+	}
+
+	@Test
+	void given_null_text_should_throw_exception () throws Exception {
+		
+		// Given
+		text = null;
+		
+		// Then
+		assertThrows(IllegalArgumentException.class, () -> {
+			// When
+			imageService.generateQRCode(text, width, height);
 		});
 	}
 
 	@Test
-	public void testImageServiceQrCodeGenerationErrorEmptyText () throws Exception {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			imageService.generateQRCode("", 256, 256);
+	void given_empty_text_should_throw_exception () throws Exception {
+		
+		// Given
+		text = "";
+
+		// Then
+		assertThrows(IllegalArgumentException.class, () -> {
+			// When
+			imageService.generateQRCode(text, width, height);
 		});
 	}
 
 	@Test
-	public void testImageServiceQrCodeGenerationErrorInvalidWidth () throws Exception {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			imageService.generateQRCode("This is a test", 0, 256);
+	void given_zero_width_should_throw_exception () throws Exception {
+
+		// Given
+		width = 0;
+		
+		// Then
+		assertThrows(IllegalArgumentException.class, () -> {
+			// When
+			imageService.generateQRCode(text, width, height);
 		});
 	}
 
 	@Test
-	public void testImageServiceQrCodeGenerationErrorInvalidHeight () throws Exception {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			imageService.generateQRCode("This is a test", 256, 0);
+	void given_zero_height_should_throw_exception () throws Exception {
+		
+		// Given
+		height = 0;
+		
+		// Then
+		assertThrows(IllegalArgumentException.class, () -> {
+			// When
+			imageService.generateQRCode(text, width, height);
 		});
 	}
 
 	@Test
-	public void testQrCodeControllerSuccess() throws Exception {
+	void testQrCodeControllerSuccess() throws Exception {
 		byte[] testImage;
 		// When running using Azul "Zulu JDK", the generated image is smaller. We need to take this into
 		// consideration, because Github Actions is using Zulu JDK.
@@ -90,5 +138,65 @@ public class SpringExampleAppTests {
 		.expectHeader().cacheControl(CacheControl.maxAge(1800, TimeUnit.SECONDS))
 		.expectHeader().contentLength(testImage.length)
 		.expectBody(byte[].class).isEqualTo(testImage);
+	}
+	
+	@Test
+	void given_populated_cache_when_delete_then_cache_gets_cleared() throws Exception {
+		
+		// Given
+		generateQr();
+		assertQrIsCached();
+		
+		// When
+		webClient.delete().uri(SpringExampleApp.QRCODE_ENDPOINT).exchange().expectStatus().isNoContent();
+		
+		// Then
+		assertQrIsNotCached();
+	}
+	
+	@Test
+	void given_empty_cache_when_generate_qr_should_add_to_cache() throws Exception {
+
+		// Given
+		clearCache();
+		
+		// When
+		generateQr();
+
+		// Then
+		assertQrIsCached();
+    }
+	
+	private void clearCache() {
+		final Cache imageCache = cacheManager.getCache(ImageService.CACHE_NAME);
+		imageCache.invalidate();		
+	}
+	
+	private void generateQr() {
+		final String text = "This is a test";
+		byte[] imageBlob = imageService.generateQRCode(text, width, height);
+		assertNotNull(imageBlob);		
+	}
+	
+	private void assertReadableQr(byte[] imageBlob) throws IOException, NotFoundException {
+		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageBlob));
+		LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
+		BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));		
+		Result result = new MultiFormatReader().decode(bitmap);
+		assertNotNull(result);
+		assertEquals(text, result.getText());
+	}
+	
+	private void assertQrIsCached() {
+		final Cache imageCache = cacheManager.getCache(ImageService.CACHE_NAME);
+		final ValueWrapper valueWrapper = imageCache.get(new SimpleKey(text, 256, 256));
+		assertNotNull(valueWrapper);
+		assertNotNull(valueWrapper.get());
+	}
+	
+	private void assertQrIsNotCached() {
+		final Cache imageCache = cacheManager.getCache(ImageService.CACHE_NAME);
+		final ValueWrapper valueWrapper = imageCache.get(new SimpleKey(text, 256, 256));
+		assertNull(valueWrapper);
 	}
 }
