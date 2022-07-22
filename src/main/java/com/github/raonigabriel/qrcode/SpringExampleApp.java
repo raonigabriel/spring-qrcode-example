@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 the original author or authors.
+ * Copyright 2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.*;
-import reactor.core.publisher.Mono;
+
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -37,7 +37,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.DELETE})
+@CrossOrigin(origins = {"github.com"}, methods = {RequestMethod.GET, RequestMethod.DELETE})
 public class SpringExampleApp {
 
 	public static final String QRCODE_ENDPOINT = "/qrcode";
@@ -51,10 +51,9 @@ public class SpringExampleApp {
 	}
 
 	@GetMapping(value = QRCODE_ENDPOINT, produces = MediaType.IMAGE_PNG_VALUE)
-	public Mono<ResponseEntity<byte[]>> getQRCode(@RequestParam(value = "text", required = true) String text) {
-		return imageService.generateQRCode(text, 256, 256).map(imageBuff ->  
-			ResponseEntity.ok().cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES)).body(imageBuff)
-		);
+	public ResponseEntity<byte[]> getQRCode(@RequestParam(value = "text", required = true) String text) {
+			return ResponseEntity.ok().cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
+			.body(imageService.generateQRCode(text, 256, 256));
 	}
 
 	@Scheduled(fixedRate = THIRTY_MINUTES)
