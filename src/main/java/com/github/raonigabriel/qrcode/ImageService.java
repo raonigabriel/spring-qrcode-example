@@ -55,7 +55,7 @@ public class ImageService {
 			ImageIO.write(img, MediaType.IMAGE_PNG.getSubtype(), baos);
 			return baos.toByteArray();
 		} catch(IOException ex) {
-			throw new RuntimeException(ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
