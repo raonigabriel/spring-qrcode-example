@@ -27,6 +27,7 @@ import java.lang.ref.SoftReference;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -52,8 +53,9 @@ final class Memoizer<T,R> {
 			SoftReference<R> ref = cache.get(arg);
 			if (ref != null) {
 				R result = ref.get();
-				if (result != null)
+				if (result != null) {
 					return result;
+				}
 			}
 		}
 		
@@ -63,11 +65,14 @@ final class Memoizer<T,R> {
 				SoftReference<R> ref = cache.get(arg);
 				if (ref != null) {
 					R result = ref.get();
-					if (result != null)
+					if (result != null) {
 						return result;
+					}
 					cache.remove(arg);
 				}
-				assert !cache.containsKey(arg);
+				if (!cache.containsKey(arg)) {
+					throw new IllegalArgumentException("Invalid arg: " + arg);
+				}
 				
 				if (pending.add(arg))
 					break;
@@ -75,7 +80,10 @@ final class Memoizer<T,R> {
 				try {
 					this.wait();
 				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
+					// Restore interrupted state...
+				    Thread.currentThread().interrupt();
+				    // Using a dedicated exception
+					throw new CancellationException(e.getMessage());
 				}
 			}
 		}
