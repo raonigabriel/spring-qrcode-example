@@ -5,10 +5,6 @@ server:
       enabled: false
  
 spring:
-     
-  mvc:
-    favicon:
-      enabled: false  
       
   jmx:
     enabled: false
@@ -18,5 +14,5 @@ spring:
     
 logging:
   level:
-    org.springframework.web: INFO
+    '[org.springframework.web]': INFO
     
