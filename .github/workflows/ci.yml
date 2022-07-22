@@ -1,0 +1,25 @@
+name: 'Continuous Integration'
+ci.
+on:
+  workflow_dispatch:
+  push: # Run on push
+    branches-ignore:
+      - master # Run on every branch, except master
+    paths:
+      - 'pom.xml' # If the 'pom' has changed
+      - 'src/**.java' # If a java 'source file' has changed
+      - '.github/workflows/*.yml' # 'If any 'workflow file' has changed 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout      
+      uses: actions/checkout@v3
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+        cache: gradle
+    - name: Verify with Maven
+      run: mvn -B -ntp verify
