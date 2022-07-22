@@ -12,7 +12,7 @@ Demonstrates some capabilities of the Spring Boot framework through a small, sim
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
-1. [Spring Boot 2.7.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems, including [“service” support](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L100)
+1. [Spring Boot 2.7.x](https://github.com/raonigabriel/spring-qrcode-example/blob/master/pom.xml#L39), supporting fully executable JARs for Linux based operating systems
 2. WebFlux rest controller to [generate qrcode images](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L54)
   1. Produces binary [Content-Type (PNG)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L53)
   2. HTTP header manipulation [(Cache-Control)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L56)
@@ -20,7 +20,7 @@ After reviewing this example, you should have a good understanding of what Sprin
   4. Manual cache eviction [(HTTP DELETE)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L62)
   5. CORS enabled [(GET, DELETE)](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L40)
 3. [Reactive processing](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L35) (for the image creation)
-  1. Uses the [Fast Java QrCode Generator library](https://github.com/nayuki/QR-Code-generator/tree/master/java-fast) by *nayuki*.
+  1. Uses the [Fast Java QrCode Generator library](https://github.com/nayuki/QR-Code-generator/tree/master/java-fast) by [nayuki](https://github.com/nayuki).
 4. Spring IoC ([Service](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L29), [Autowired](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L47))
 5. [Backend caching](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L30) (Spring "simple" memory-based ConcurrentHashMap)
 6. Scheduled tasks. Automatic cache eviction, [every 30 minutes](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L60).
