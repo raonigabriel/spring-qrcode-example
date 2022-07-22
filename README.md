@@ -4,7 +4,7 @@
 
 Spring Boot QrCode Example
 -------------------
-Demonstrates some of the capabilities of the Spring Boot framework through a small, simple example.
+Demonstrates some capabilities of the Spring Boot framework through a small, simple example.
 After reviewing this example, you should have a good understanding of what Spring Boot can do and get a feel for how easy it is to use.
 #Features:
 
@@ -19,7 +19,7 @@ After reviewing this example, you should have a good understanding of what Sprin
   1. Uses the [Fast Java QrCode Generator library](https://github.com/nayuki/QR-Code-generator/tree/master/java-fast) by *nayuki*.
 4. Spring IoC ([Service](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L29), [Autowired](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L47))
 5. [Backend caching](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L30) (Spring "simple" memory-based ConcurrentHashMap)
-6. Schedulled tasks. Automatic cache eviction, [every 30 minutes](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L60).
+6. Scheduled tasks. Automatic cache eviction, [every 30 minutes](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/SpringExampleApp.java#L60).
 7. [Logging](https://github.com/raonigabriel/spring-qrcode-example/blob/master/src/main/java/com/github/raonigabriel/qrcode/ImageService.java#L33) (sl4j + logback)
 8. Only 2 classes, about 100 lines of code!!! 
 9. Small. Final JAR includes everything (it self-contained) and it's about 18 MB
