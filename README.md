@@ -1,5 +1,9 @@
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
 ![Maven Build](https://github.com/raonigabriel/spring-qrcode-example/workflows/Maven%20Build/badge.svg?branch=master)
-[![Codecov](https://codecov.io/gh/raonigabriel/spring-qrcode-example/branch/master/graph/badge.svg)](https://codecov.io/gh/raonigabriel/spring-qrcode-example)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
 [![Libraries](https://img.shields.io/librariesio/github/raonigabriel/spring-qrcode-example)](https://libraries.io/github/raonigabriel/spring-qrcode-example)
 
 Spring Boot QrCode Example
