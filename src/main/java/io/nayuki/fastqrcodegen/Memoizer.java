@@ -70,7 +70,7 @@ final class Memoizer<T,R> {
 					}
 					cache.remove(arg);
 				}
-				if (!cache.containsKey(arg)) {
+				if (cache.containsKey(arg)) {
 					throw new IllegalArgumentException("Invalid arg: " + arg);
 				}
 				
