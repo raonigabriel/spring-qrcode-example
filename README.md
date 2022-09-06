@@ -5,6 +5,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=raonigabriel_spring-qrcode-example&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=raonigabriel_spring-qrcode-example)
 [![Libraries](https://img.shields.io/librariesio/github/raonigabriel/spring-qrcode-example)](https://libraries.io/github/raonigabriel/spring-qrcode-example)
+[![Open in Remote - Containers](https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/raonigabriel/spring-qrcode-example)
 
 Spring Boot QrCode Example
 -------------------
