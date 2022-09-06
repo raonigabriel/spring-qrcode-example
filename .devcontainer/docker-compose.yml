@@ -1,0 +1,8 @@
+version: '3'
+services:
+  vscode:
+    build: .
+    command: "sleep infinity"
+    volumes:
+      - ..:/workspace:cached
+

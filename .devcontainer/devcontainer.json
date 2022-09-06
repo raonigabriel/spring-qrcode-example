@@ -1,0 +1,17 @@
+{
+	"name": "Java",
+	"dockerComposeFile": ["docker-compose.yml"],
+	"service": "vscode",
+	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"maven.executable.path": "/usr/bin/mvn"
+			},
+			"extensions": [
+				"vscjava.vscode-java-pack", "vscjava.vscode-gradle"
+			]
+		}
+	},
+	"forwardPorts": [8080]
+}
